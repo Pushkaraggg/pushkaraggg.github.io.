@@ -170,6 +170,14 @@ section { padding-block: clamp(56px, 8vw, 104px) 0; }
 .clock { font-family: var(--font-mono); font-size: 13px; color: #A7AFC8; display: inline-flex; align-items: center; gap: 8px; }
 .clock i { width: 7px; height: 7px; border-radius: 50%; background: #5EE6B0; animation: ping2 2s infinite; }
 @keyframes ping2 { 70% { box-shadow: 0 0 0 8px rgba(94,230,176,0); } 100% { box-shadow: 0 0 0 0 rgba(94,230,176,0); } 0% { box-shadow: 0 0 0 0 rgba(94,230,176,.55); } }
+.clist { display: grid; max-width: 560px; border: 1px solid var(--line-strong); border-radius: 14px; background: rgba(9,11,19,.6); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); overflow: hidden; }
+.crow { display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; align-items: center; gap: 4px 16px; padding: 14px 18px; border-top: 1px solid var(--line); }
+.crow:first-child { border-top: 0; }
+.ck { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: #A7AFC8; }
+.cv { font-size: 16px; font-weight: 500; text-decoration: none; overflow-wrap: anywhere; user-select: all; }
+a.cv:hover { color: var(--hot); }
+.crow .copy { font-size: 12px; padding: 4px 12px; }
+@media (max-width: 520px) { .crow { grid-template-columns: minmax(0, 1fr) auto; } .ck { grid-column: 1 / -1; } }
 footer { padding-block: 30px 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; color: var(--muted); font-size: 14px; }
 .toast { position: fixed; left: 50%; bottom: max(24px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 10px 18px; border-radius: 99px; font-size: 14px; font-weight: 600; z-index: 120; max-width: calc(100vw - 32px); }
 
@@ -205,9 +213,8 @@ footer { padding-block: 30px 0; display: flex; flex-wrap: wrap; justify-content:
   <main>
     <div class="hero">
       <canvas id="field" aria-hidden="true"></canvas>
-      <span class="status"><i></i>B.Tech ECE · MAIT Delhi · 2027</span>
       <h1 class="name"><span>PUSHKAR</span><span class="out">AGGARWAL</span></h1>
-      <p class="roleline">I'm a <b id="typed"></b><span class="caret" aria-hidden="true"></span></p>
+      <p class="roleline">I'm <b id="typed"></b><span class="caret" aria-hidden="true"></span></p>
       <p class="intro">I turn messy data and manual workflows into dashboards, automations and product decisions. Three internships, one consulting club, and a toolkit built around SQL, Power BI and n8n.</p>
       <div class="actions">
         <a class="seework mag" href="#work">
@@ -295,27 +302,26 @@ footer { padding-block: 30px 0; display: flex; flex-wrap: wrap; justify-content:
           <h2 class="big" id="contact-h"><span>Let's build</span><span>something</span><span class="grad">together.</span></h2>
           <p class="csub">Have a product, a dataset or a problem worth solving? Write to me.</p>
         </div>
-        <div class="tiles">
-          <div class="tile wide">
-            <span class="label">Email</span>
-            <div class="val"><a id="email" href="mailto:pushkaragg033@gmail.com">pushkaragg033@gmail.com</a></div>
-            <div class="row"><span></span><button class="copy" type="button" data-copy="email">copy email</button></div>
+        <div class="clist">
+          <div class="crow">
+            <span class="ck">Email</span>
+            <a class="cv" id="email" href="mailto:pushkaragg033@gmail.com">pushkaragg033@gmail.com</a>
+            <button class="copy" type="button" data-copy="email">Copy</button>
           </div>
-          <div class="tile">
-            <span class="label">Phone</span>
-            <div class="val" id="phone">+91 9899575765</div>
-            <div class="row"><span></span><button class="copy" type="button" data-copy="phone">copy number</button></div>
+          <div class="crow">
+            <span class="ck">Phone</span>
+            <span class="cv" id="phone">+91 9899575765</span>
+            <button class="copy" type="button" data-copy="phone">Copy</button>
           </div>
-          <div class="tile wide" style="grid-column: 1 / -1">
-            <span class="label">Based in</span>
-            <div class="val">Gurgaon, Haryana, India</div>
+          <div class="crow">
+            <span class="ck">Based in</span>
+            <span class="cv">Gurgaon, Haryana, India</span>
+            <span></span>
           </div>
         </div>
       </div>
     </section>
   </main>
-
-  <footer><span>Pushkar Aggarwal · Gurgaon, Haryana</span></footer>
 </div>
 
 <script>
@@ -387,7 +393,7 @@ footer { padding-block: 30px 0; display: flex; flex-wrap: wrap; justify-content:
   }
 
   /* typed roles */
-  var ROLES = ['business analyst.', 'AI product builder.', 'SQL and Power BI storyteller.', 'consulting club VP.'], ri = 0, ci = 0, del = false, typed = $('#typed');
+  var ROLES = ['a business analyst.', 'an AI product builder.', 'an analytics enthusiast.'], ri = 0, ci = 0, del = false, typed = $('#typed');
   if (reduce) { typed.textContent = ROLES[0]; }
   else {
     (function tick() {
